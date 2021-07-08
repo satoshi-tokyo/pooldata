@@ -1,0 +1,91 @@
+<html>
+    
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="sample.css">
+      </head>
+      <body>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript">
+          var pool_id;
+          var pool_id_bech32;
+          var blocks_epoch;
+          var blocks_lifetime;
+          var roa;
+          var roa_lifetime;
+          var luck_lifetime;
+          var hist_roa = [];
+          var chartVal =[]
+          getData()
+
+          function getData(){
+            const url = 'https://js.adapools.org/pools/5c8751066db31d6745bc8a58ba1534de67a95f9962fc309b4673dd8c/summary.json';
+            $.getJSON(url, (data) => {
+              pool_id=data.data.pool_id;
+              pool_id_bech32=data.data.pool_id_bech32;
+              blocks_epoch=data.data.blocks_epoch;
+              blocks_lifetime=data.data.blocks_lifetime;
+              roa=data.data.roa;
+              roa_lifetime=data.data.roa_lifetime;
+              luck_lifetime=data.data.luck_lifetime;
+
+              hist_roa = JSON.parse(data.data.hist_roa);
+              // chartVal.push(['Epoch', 'ROA(%)'])
+              for (let i=3; i<hist_roa.length; i++){
+                p = [hist_roa[i].e.toString(), parseFloat(hist_roa[i].val)]
+                chartVal.push(p)
+              };
+
+              console.log('Epoch Block: ' + blocks_epoch);
+              console.log('Lifetime Block: ' + blocks_lifetime);
+              console.log('ROA: ' + roa);
+              console.log('ROA Lifetime: ' + roa_lifetime);
+              console.log('Luck Lifetime: ' + luck_lifetime);
+
+              google.charts.load('current', {packages: ['corechart']});
+              // console.log(chartVal)
+              google.charts.setOnLoadCallback(drawChart);
+            });
+          };
+
+
+        function drawChart() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Epoch');
+          data.addColumn('number', 'ROA(%)');
+          data.addRows(chartVal);
+
+          // setTimeout(function(){
+          // var data = google.visualization.arrayToDataTable(chartVal);
+          // var view = new google.visualization.DataView(data);
+
+          var options = {
+            'legend': { position: 'none' },
+            'animation': { 
+              'startup': true,
+              'easing': 'linear',
+              'duration': 800
+             },
+             'hAxis': {
+               'title': 'Epoch',
+               'gridlines': {
+                 'count':0
+               }
+             },
+             'vAxis': {
+              'title': 'ROA(%)',
+               'gridlines': {
+                 'count':0
+               }
+             },
+            'width': 400,
+            'height': 300
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
+        </script>
+           <div id="chart_div" style="width:100%"></div>
+          </body>
+</html>
