@@ -63,16 +63,16 @@
               // Render
               var stage_block = document.getElementById('stage_block');
               var stage_roa = document.getElementById('stage_roa');
-              tag = "<font size='3' color='#77add1'>"
+              tag = "<font size='2' color='#77add1'>"
               // tag = "<span>" + poolId + "</span><br>";
               // tag += "<span>" + poolIdDaedalus + "</span><br>";
-              tag_block = tag + "<b>" + epochBlock + "</b><br>";
-              tag_block += "<b>" + lifeTimeBlock + "</b><br>";
+              tag_block = tag + epochBlock + "<br>";
+              tag_block += lifeTimeBlock + "<br>";
               tag_block += "</font>";
 
-              tag_roa = tag + "<b>" + ROAMonth + "</b><br>";
-              tag_roa += "<b>" + ROALifeTime + "</b><br>";
-              tag_roa += "<b>" + luckLifeTime + "</b><br>";
+              tag_roa = tag + ROAMonth + "<br>";
+              tag_roa += ROALifeTime + "<br>";
+              tag_roa += luckLifeTime + "<br>";
               tag_roa += "</font>";
               // tag += "<span>" + ActiveStake + "</span><br>";
               // tag += "<span>" + TotalStake + "</span><br>";
@@ -94,7 +94,7 @@
             'titleTextStyle': 
             {
               'color': '#77add1',
-              'bold': true,
+              'bold': false,
               'fontSize': 16
             },
             'legend': {
@@ -136,7 +136,7 @@
                  'count': 0
                }
              },
-            'width': 400,
+            'width': 350,
             'height': 300
           };
           var stage = document.getElementById('stage1');
@@ -151,7 +151,7 @@
             'titleTextStyle': 
             {
               'color': '#77add1',
-              'bold': true,
+              'bold': false,
               'fontSize': 16
             },
             'legend': {
@@ -193,14 +193,13 @@
                  'count': 0
                }
              },
-            'width': 400,
+            'width': 350,
             'height': 300
           };
           var stage = document.getElementById('stage2');
           var chart = new google.visualization.ColumnChart(stage);
           chart.draw(data, options);
         };
-
         </script>
         <div style="text-align:center;" id="stage_block"></div>
         <div id="stage1"></div>
